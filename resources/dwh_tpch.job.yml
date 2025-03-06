@@ -1,0 +1,21 @@
+# The main job for vault.
+resources:
+  jobs:
+    dwh_tpch_job:
+      name: dwh_tpch_job
+
+      tasks:
+        - task_key: create_dwh_assets
+          pipeline_task:
+            pipeline_id: ${resources.pipelines.dwh_tpch_pipeline.id}
+            full_refresh: false
+
+        - task_key: create_views_fix
+          depends_on:
+            - task_key: create_dwh_assets
+          notebook_task:
+            notebook_path: ../src/03-dwh-core-views.sql
+
+      parameters:
+        - name: prefix
+          default: ${var.prefix}

@@ -1,0 +1,13 @@
+resources:
+  pipelines:
+    src_tpch_pipeline:
+      name: src_tpch_pipeline
+      catalog: ${var.prefix}_src_tpch
+      schema: default
+      libraries:
+        - notebook:
+            path: ../src/01-source.sql
+
+      configuration:
+        bundle.sourcePath: ${workspace.file_path}/src
+        prefix: ${var.prefix}

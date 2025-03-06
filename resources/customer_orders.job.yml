@@ -1,0 +1,14 @@
+# The main job for vault.
+resources:
+  jobs:
+    customer_orders_job:
+      name: customer_orders_job
+
+      tasks:
+        - task_key: customer_orders_model
+          notebook_task:
+            notebook_path: ../src/04-customer-orders.sql
+
+      parameters:
+        - name: prefix
+          default: ${var.prefix}

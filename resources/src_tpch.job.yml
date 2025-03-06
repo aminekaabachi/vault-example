@@ -1,0 +1,21 @@
+# The main job for vault.
+resources:
+  jobs:
+    src_tpch_job:
+      name: src_tpch_job
+
+      tasks:
+        - task_key: load_data
+          pipeline_task:
+            pipeline_id: ${resources.pipelines.src_tpch_pipeline.id}
+            full_refresh: false
+
+        - task_key: create_views_fix
+          depends_on:
+            - task_key: load_data
+          notebook_task:
+            notebook_path: ../src/01-source-views.sql
+
+      parameters:
+        - name: prefix
+          default: ${var.prefix}

@@ -1,0 +1,15 @@
+resources:
+  pipelines:
+    dwh_tpch_pipeline:
+      name: dwh_tpch_pipeline
+      catalog: ${var.prefix}_dwh_tpch
+      schema: default
+      libraries:
+        - notebook:
+            path: ../src/02-dwh-staging.sql
+        - notebook:
+            path: ../src/03-dwh-core.sql
+
+      configuration:
+        bundle.sourcePath: ${workspace.file_path}/src
+        prefix: ${var.prefix}

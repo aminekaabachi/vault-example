@@ -1,0 +1,14 @@
+# The main job for vault.
+resources:
+  jobs:
+    init:
+      name: init_job
+
+      tasks:
+        - task_key: init_example
+          notebook_task:
+            notebook_path: ../src/00-init.py
+
+      parameters:
+        - name: prefix
+          default: ${var.prefix}
